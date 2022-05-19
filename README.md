@@ -36,7 +36,7 @@ project_key = <PROJECT_KEY>
 # Absolute path to the report file. E.g. "/Users/user/Project/report/cucumber.json"  
 source_report_file = <REPORT_FILE_PATH>
     
-# Report format. Possible values: cucumber, junit, custom  
+# Report format. Possible values: cucumber, junit, "behave", custom  
 report_format = "cucumber"
     
 # Automatically create test cases if they are absent in Zephyr Scale. Possible values: true, false  
@@ -55,7 +55,7 @@ project_key = <PROJECT_KEY>
 # Absolute path to the report file. E.g. "/Users/user/Project/report/cucumber.json"  
 source_report_file = <REPORT_FILE_PATH>
     
-# Report format. Possible values: "cucumber", "junit", "custom".  
+# Report format. Possible values: "cucumber", "junit", "behave", "custom".  
 report_format = "cucumber"
     
 # Automatically create test cases if they are absent in Zephyr Scale. Possible values: "true", "false". Default: "true"   
