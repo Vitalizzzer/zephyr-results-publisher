@@ -1,5 +1,6 @@
 import json
 import sys
+import os
 from jsonschema import Draft4Validator
 
 
@@ -23,7 +24,7 @@ def convert_report(report_file):
             item['description'] = ''
 
     for feature in report:
-        common_processing(feature, False)
+        common_processing(feature, True)
         for scenario in feature['elements']:
             common_processing(scenario, False)
             for step in scenario['steps']:
@@ -46,8 +47,10 @@ def convert_report(report_file):
     return report
 
 
-def validate_json(schema_file, report_file):
-    with open(schema_file, 'r') as json_file:
+def validate_json(report_file):
+    file_dir = os.path.dirname(__file__)
+    file_path = f"{file_dir}/cucumber-report-schema.json"
+    with open(file_path, 'r') as json_file:
         schema = json.load(json_file)
     errors = list(Draft4Validator(schema).iter_errors(report_file))
     for error in errors:
