@@ -36,7 +36,7 @@ project_key = <PROJECT_KEY>
 # Absolute path to the report file. E.g. "/Users/user/Project/report/cucumber.json"  
 source_report_file = <REPORT_FILE_PATH>
     
-# Report format. Possible values: cucumber, junit, custom  
+# Report format. Possible values: "cucumber", "junit", "behave", "custom"  
 report_format = "cucumber"
     
 # Automatically create test cases if they are absent in Zephyr Scale. Possible values: true, false  
@@ -55,7 +55,7 @@ project_key = <PROJECT_KEY>
 # Absolute path to the report file. E.g. "/Users/user/Project/report/cucumber.json"  
 source_report_file = <REPORT_FILE_PATH>
     
-# Report format. Possible values: "cucumber", "junit", "custom".  
+# Report format. Possible values: "cucumber", "junit", "behave", "custom".  
 report_format = "cucumber"
     
 # Automatically create test cases if they are absent in Zephyr Scale. Possible values: "true", "false". Default: "true"   
@@ -86,4 +86,20 @@ publisher.publish_customized_test_cycle(project_key,
                               test_cycle_description,
                               test_cycle_jira_project_version,
                               test_cycle_custom_fields)
+```
+
+**IMPORTANT:**
+Publisher tool should be executed after the test report is fully generated.  
+The best solution would be to create a function in one of the existing *.py files in the test project with 
+```@atexit.register``` annotation. E.g.:
+
+```
+@atexit.register
+def publish_report():  
+    if os.environ.get("API_KEY") is not None:
+        project_key = "PROJECTKEY"  
+        source_report_file = "/Users/user/Project/report/cucumber.json"  
+        report_format = "behave"   
+        auto_create_test_cases = "true"  
+        publisher.publish(project_key, source_report_file, report_format, auto_create_test_cases)
 ```
