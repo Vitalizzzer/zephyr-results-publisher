@@ -49,7 +49,7 @@ def convert_report(report_file):
 
 def validate_json(report_file):
     file_dir = os.path.dirname(__file__)
-    file_path = f"{file_dir}/cucumber-report-schema.json"
+    file_path = f"{file_dir}/model/cucumber_report_schema.json"
     with open(file_path, 'r') as json_file:
         schema = json.load(json_file)
     errors = list(Draft4Validator(schema).iter_errors(report_file))
