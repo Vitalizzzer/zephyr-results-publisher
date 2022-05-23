@@ -23,8 +23,14 @@ from zephyr_results_publisher import publisher
 **Set environment variable Zephyr Scale API_KEY:**  
 How to generate API KEY: [Generating API Access Tokens](https://support.smartbear.com/zephyr-scale-cloud/docs/rest-api/generating-api-access-tokens.html)  
 
+For UNIX like platforms:
 ```
 export API_KEY=XXXXXXXXX
+```
+
+For Windows platforms:
+```
+set API_KEY=XXXXXXXXX
 ```
 
 **To publish automation results into Zephyr Test Cycle root folder**
