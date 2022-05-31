@@ -99,13 +99,41 @@ Publisher tool should be executed after the test report is fully generated.
 The best solution would be to create a function in one of the existing *.py files in the test project with 
 ```@atexit.register``` annotation. E.g.:
 
+To publish results into Test Cycle root folder use function:
+
 ```
 @atexit.register
 def publish_report():  
     if os.environ.get("API_KEY") is not None:
-        project_key = "PROJECTKEY"  
+        project_key = "PROJECT_KEY"  
         source_report_file = "/Users/user/Project/report/cucumber.json"  
         report_format = "behave"   
         auto_create_test_cases = "true"  
         publisher.publish(project_key, source_report_file, report_format, auto_create_test_cases)
+```
+
+or to publish automation results into a specific Zephyr Test Cycle folder and customize Test Cycle properties:
+
+```
+@atexit.register
+def publish_report():
+    if os.environ.get("API_KEY") is not None:
+        project_key = "PROJECT_KEY"
+        source_report_file = "report/behave-report.json"
+        report_format = "behave"
+        auto_create_test_cases = "true"
+        test_cycle_name = "Test Cycle Description"
+        test_cycle_folder_name = "Already created folder name"
+        test_cycle_description = "Test Cycle description"
+        test_cycle_jira_project_version = 1
+        test_cycle_custom_fields = {}
+        publisher.publish_customized_test_cycle(project_key,
+                                                source_report_file,
+                                                report_format,
+                                                auto_create_test_cases,
+                                                test_cycle_name,
+                                                test_cycle_folder_name,
+                                                test_cycle_description,
+                                                test_cycle_jira_project_version,
+                                                test_cycle_custom_fields)
 ```
