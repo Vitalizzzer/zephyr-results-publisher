@@ -21,7 +21,8 @@ def publish(project_key, source_report_file, report_format, auto_create_test_cas
             with open(source_report_file, "w") as f:
                 f.write(str(report))
 
-    validate_report_schema(source_report_file)
+    if report_format == "cucumber":
+        validate_report_schema(source_report_file)
     url = BASE_URL + f"/automations/executions/{report_format}"
     source_path_dir = get_path_dir(source_report_file)
     output_zip = f"{source_path_dir}/testResults.zip"
@@ -65,7 +66,8 @@ def publish_customized_test_cycle(project_key,
             with open(source_report_file, "w") as f:
                 f.write(str(report))
 
-    validate_report_schema(source_report_file)
+    if report_format == "cucumber":
+        validate_report_schema(source_report_file)
     url = BASE_URL + f"/automations/executions/{report_format}"
     source_path_dir = get_path_dir(source_report_file)
     output_zip = f"{source_path_dir}/testResults.zip"
