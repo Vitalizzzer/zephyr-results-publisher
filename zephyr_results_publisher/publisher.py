@@ -9,7 +9,7 @@ from zephyr_results_publisher.helper import check_response_status, find_folder_i
 logging.basicConfig(level=logging.INFO, format='%(asctime)s :: %(levelname)s :: %(message)s')
 
 BASE_URL = "https://api.zephyrscale.smartbear.com/v2"
-API_KEY = str(os.environ.get("API_KEY"))
+ZEPHYR_TOKEN = str(os.environ.get("ZEPHYR_TOKEN"))
 
 
 def publish(project_key, source_report_file, report_format, auto_create_test_cases="true"):
@@ -33,7 +33,7 @@ def publish(project_key, source_report_file, report_format, auto_create_test_cas
         "autoCreateTestCases": auto_create_test_cases
     }
     headers = {
-        "Authorization": "Bearer " + API_KEY
+        "Authorization": "Bearer " + ZEPHYR_TOKEN
     }
     files = {
         "file": open(output_zip, 'rb')
@@ -84,7 +84,7 @@ def publish_customized_test_cycle(project_key,
         "autoCreateTestCases": auto_create_test_cases
     }
     headers = {
-        "Authorization": "Bearer " + API_KEY
+        "Authorization": "Bearer " + ZEPHYR_TOKEN
     }
     files = {
         "file": open(output_zip, 'rb'),
@@ -137,7 +137,7 @@ def get_folder_id_by_name(name, project_key, max_results):
         "maxResults": max_results
     }
     headers = {
-        "Authorization": "Bearer " + API_KEY
+        "Authorization": "Bearer " + ZEPHYR_TOKEN
     }
 
     logging.info(params)

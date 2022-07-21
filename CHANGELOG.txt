@@ -36,3 +36,16 @@ Change log
 0.1.5 (23/05/2022)
 ---------------------
 - Added project.urls to pyproject.toml
+
+0.1.6 (23/05/2022)
+---------------------
+- Refactoring
+
+0.1.7 (23/05/2022)
+---------------------
+- Made report schema validation only for "cucumber" and "behave" formats
+
+0.1.8 (23/05/2022)
+---------------------
+- Changed API_KEY environment variable to ZEPHYR_TOKEN
+

@@ -20,17 +20,17 @@ pip install zephyr-results-publisher
 from zephyr_results_publisher import publisher
 ```
 
-**Set environment variable Zephyr Scale API_KEY:**  
+**Set environment variable Zephyr Scale ZEPHYR_TOKEN:**  
 How to generate API KEY: [Generating API Access Tokens](https://support.smartbear.com/zephyr-scale-cloud/docs/rest-api/generating-api-access-tokens.html)  
 
 For UNIX like platforms:
 ```
-export API_KEY=XXXXXXXXX
+export ZEPHYR_TOKEN=XXXXXXXXX
 ```
 
 For Windows platforms:
 ```
-set API_KEY=XXXXXXXXX
+set ZEPHYR_TOKEN=XXXXXXXXX
 ```
 
 **To publish automation results into Zephyr Test Cycle root folder**
@@ -104,7 +104,7 @@ To publish results into Test Cycle root folder use function:
 ```
 @atexit.register
 def publish_report():  
-    if os.environ.get("API_KEY") is not None:
+    if os.environ.get("ZEPHYR_TOKEN") is not None:
         project_key = "PROJECT_KEY"  
         source_report_file = "/Users/user/Project/report/cucumber.json"  
         report_format = "behave"   
@@ -117,7 +117,7 @@ or to publish automation results into a specific Zephyr Test Cycle folder and cu
 ```
 @atexit.register
 def publish_report():
-    if os.environ.get("API_KEY") is not None:
+    if os.environ.get("ZEPHYR_TOKEN") is not None:
         project_key = "PROJECT_KEY"
         source_report_file = "report/behave-report.json"
         report_format = "behave"
