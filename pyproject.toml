@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "zephyr_results_publisher"
 description = "Automation results publisher to Zephyr Scale Cloud"
 readme = "README.md"
-version = "0.1.8"
+version = "0.1.9"
 keywords = ["zephyr", "scale", "smartbear", "jira", "api", "automation", "report"]
 license = {text = "MIT"}
 authors = [{name = "Vitalii Rymar", email = "vitalii.stas.rymar@gmail.com"}]

@@ -1,7 +1,6 @@
 import json
 import logging
 import requests
-import os
 from zephyr_results_publisher.behave_to_cucumber_converter import convert_report, validate_json
 from zephyr_results_publisher.file_util import zip_file, get_path_dir
 from zephyr_results_publisher.helper import check_response_status, find_folder_id_by_name
@@ -9,10 +8,9 @@ from zephyr_results_publisher.helper import check_response_status, find_folder_i
 logging.basicConfig(level=logging.INFO, format='%(asctime)s :: %(levelname)s :: %(message)s')
 
 BASE_URL = "https://api.zephyrscale.smartbear.com/v2"
-ZEPHYR_TOKEN = str(os.environ.get("ZEPHYR_TOKEN"))
 
 
-def publish(project_key, source_report_file, report_format, auto_create_test_cases="true"):
+def publish(zephyr_token, project_key, source_report_file, report_format, auto_create_test_cases="true"):
     if report_format == "behave":
         report_format = "cucumber"
         logging.info(f"Start converting: {source_report_file}")
@@ -33,7 +31,7 @@ def publish(project_key, source_report_file, report_format, auto_create_test_cas
         "autoCreateTestCases": auto_create_test_cases
     }
     headers = {
-        "Authorization": "Bearer " + ZEPHYR_TOKEN
+        "Authorization": "Bearer " + zephyr_token
     }
     files = {
         "file": open(output_zip, 'rb')
@@ -47,7 +45,8 @@ def publish(project_key, source_report_file, report_format, auto_create_test_cas
     return parsed_response
 
 
-def publish_customized_test_cycle(project_key,
+def publish_customized_test_cycle(zephyr_token,
+                                  project_key,
                                   source_report_file,
                                   report_format,
                                   auto_create_test_cases="true",
@@ -73,7 +72,8 @@ def publish_customized_test_cycle(project_key,
     output_zip = f"{source_path_dir}/testResults.zip"
     zip_file(source_report_file, output_zip)
 
-    test_cycle = customize_test_cycle(project_key,
+    test_cycle = customize_test_cycle(zephyr_token,
+                                      project_key,
                                       test_cycle_name,
                                       test_cycle_folder_name,
                                       test_cycle_description,
@@ -84,7 +84,7 @@ def publish_customized_test_cycle(project_key,
         "autoCreateTestCases": auto_create_test_cases
     }
     headers = {
-        "Authorization": "Bearer " + ZEPHYR_TOKEN
+        "Authorization": "Bearer " + zephyr_token
     }
     files = {
         "file": open(output_zip, 'rb'),
@@ -111,11 +111,16 @@ def validate_report_schema(report_path):
     validate_json(report)
 
 
-def customize_test_cycle(project_key, test_cycle_name="Automation cycle", folder_name="All test cycles",
-                         description="", jira_project_version=1, custom_fields=None):
+def customize_test_cycle(zephyr_token,
+                         project_key,
+                         test_cycle_name="Automation cycle",
+                         folder_name="All test cycles",
+                         description="",
+                         jira_project_version=1,
+                         custom_fields=None):
     if custom_fields is None:
         custom_fields = {}
-    folder_id = get_folder_id_by_name(folder_name, project_key, 20)
+    folder_id = get_folder_id_by_name(zephyr_token, folder_name, project_key, 20)
     test_cycle_json = {
         "name": test_cycle_name,
         "description": description,
@@ -127,7 +132,7 @@ def customize_test_cycle(project_key, test_cycle_name="Automation cycle", folder
     return json.dumps(test_cycle_json)
 
 
-def get_folder_id_by_name(name, project_key, max_results):
+def get_folder_id_by_name(zephyr_token, name, project_key, max_results):
     url = BASE_URL + f"/folders"
 
     params = {
@@ -137,7 +142,7 @@ def get_folder_id_by_name(name, project_key, max_results):
         "maxResults": max_results
     }
     headers = {
-        "Authorization": "Bearer " + ZEPHYR_TOKEN
+        "Authorization": "Bearer " + zephyr_token
     }
 
     logging.info(params)
