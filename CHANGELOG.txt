@@ -53,3 +53,8 @@ Change log
 ---------------------
 - Changed provision of Zephyr Scale API Access Token
 
+0.1.10 (25/07/2022)
+---------------------
+- Fixed publish_customized_test_cycle
+- Added zephyr token verification
+- Replaced logging with print
