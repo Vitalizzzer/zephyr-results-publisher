@@ -36,6 +36,9 @@ set ZEPHYR_TOKEN=XXXXXXXXX
 **To publish automation results into Zephyr Test Cycle root folder**
 
 ```
+# Zephyr Scale API Access Token. Suggestion: should be provided as environment variable to avoid security issues.
+zephyr_token = <ZEPHYR_TOKEN>
+
 # Key name of the Jira project  
 project_key = <PROJECT_KEY>
 
@@ -49,7 +52,7 @@ report_format = "cucumber"
 auto_create_test_cases = "true"    
 
 # Execute
-publisher.publish(project_key, source_report_file, report_format, auto_create_test_cases)
+publisher.publish(zephyr_token, project_key, source_report_file, report_format, auto_create_test_cases)
 ```
 
 **To publish automation results into a specific Zephyr Test Cycle folder and customize Test Cycle properties**
@@ -83,7 +86,8 @@ test_cycle_jira_project_version = 1
 # Set test cycle custom fields. E.g {"Sprint": 23}. Default: {}  
 test_cycle_custom_fields = {}
 
-publisher.publish_customized_test_cycle(project_key, 
+publisher.publish_customized_test_cycle(zephyr_token,
+                              project_key, 
                               source_report_file, 
                               report_format, 
                               auto_create_test_cases
@@ -104,12 +108,13 @@ To publish results into Test Cycle root folder use function:
 ```
 @atexit.register
 def publish_report():  
-    if os.environ.get("ZEPHYR_TOKEN") is not None:
+    zephyr_token = os.environ.get("ZEPHYR_TOKEN")
+    if zephyr_token is not None:
         project_key = "PROJECT_KEY"  
         source_report_file = "/Users/user/Project/report/cucumber.json"  
         report_format = "behave"   
         auto_create_test_cases = "true"  
-        publisher.publish(project_key, source_report_file, report_format, auto_create_test_cases)
+        publisher.publish(zephyr_token, project_key, source_report_file, report_format, auto_create_test_cases)
 ```
 
 or to publish automation results into a specific Zephyr Test Cycle folder and customize Test Cycle properties:
@@ -117,17 +122,19 @@ or to publish automation results into a specific Zephyr Test Cycle folder and cu
 ```
 @atexit.register
 def publish_report():
-    if os.environ.get("ZEPHYR_TOKEN") is not None:
+    zephyr_token = os.environ.get("ZEPHYR_TOKEN")
+    if zephyr_token is not None:
         project_key = "PROJECT_KEY"
         source_report_file = "report/behave-report.json"
         report_format = "behave"
         auto_create_test_cases = "true"
-        test_cycle_name = "Test Cycle Description"
+        test_cycle_name = "Test Cycle Name"
         test_cycle_folder_name = "Already created folder name"
         test_cycle_description = "Test Cycle description"
         test_cycle_jira_project_version = 1
         test_cycle_custom_fields = {}
-        publisher.publish_customized_test_cycle(project_key,
+        publisher.publish_customized_test_cycle(zephyr_token,
+                                                project_key,
                                                 source_report_file,
                                                 report_format,
                                                 auto_create_test_cases,
