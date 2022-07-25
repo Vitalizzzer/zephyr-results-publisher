@@ -128,7 +128,7 @@ def publish_report():
         source_report_file = "report/behave-report.json"
         report_format = "behave"
         auto_create_test_cases = "true"
-        test_cycle_name = "Test Cycle Description"
+        test_cycle_name = "Test Cycle Name"
         test_cycle_folder_name = "Already created folder name"
         test_cycle_description = "Test Cycle description"
         test_cycle_jira_project_version = 1
